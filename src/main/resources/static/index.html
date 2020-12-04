@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<link href="CSS/style.css" rel="stylesheet">
+
+	<script src="JavaScript.js" charset="utf-8"></script>
+
+	<title>Inventario De Informatica</title>
+	<style>
+		table,
+		th,
+		td {
+			border: 1px solid grey;
+			border-collapse: collapse;
+			padding: 5px;
+		}
+
+		table tr:nth-child(odd) {
+			background-color: #f1f1f1;
+		}
+
+		table tr:nth-child(even) {
+			background-color: #ffffff;
+		}
+	</style>
+	<meta charset="utf-8">
+</head>
+
+<body style=" font-family: monospace; text-align: center;">
+	<div ng-app="Model" class="container col-md-12 ng-scope" ng-controller="Controller"
+		style="font-size: x-small;width: max-content;">
+
+		<div>
+			<div class="card-container " style="margin: auto;">
+				<div class="form-row" style="margin: auto;">
+					<div class="card form-form col-md-7">
+
+						<div col-md-6="" style="border: dashed;" >
+							<h4>Campo Para Atualizar Item</h4>
+							<input disabled="" autocomplete="off"
+								ng-model="getProdutoIdOrderByDataMovimento.nomeProduto" type="text"
+								class="col-12 ng-pristine ng-untouched ng-valid ng-empty" placeholder="Item">
+							<div class="col-12" style="display: inline-table;">
+								<input disabled="" autocomplete="off"
+									ng-model="getProdutoIdOrderByDataMovimento.registroTombamento" type="text"
+									class="col-6 ng-pristine ng-untouched ng-valid ng-empty" placeholder="Tombamento">
+								<input disabled="" autocomplete="off" ng-model="getProdutoIdOrderByDataMovimento.lote"
+									type="text" class="col-6 ng-pristine ng-untouched ng-valid ng-empty"
+									placeholder="Lote">
+							</div>
+							<input required autocomplete="off" ng-model="getProdutoIdOrderByDataMovimento.destino"
+								type="text"
+								class="col-12 ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required"
+								placeholder="Responsável">
+							<div required class="col-12">
+								<input type="radio" ng-model="getProdutoIdOrderByDataMovimento.emUso" value="true"
+									class="col-1 ng-pristine ng-untouched ng-valid ng-empty" name="3">
+								<label for="campo-radio1">Está em uso</label>
+								<input type="radio" ng-model="getProdutoIdOrderByDataMovimento.emUso" value="false"
+									class="col-1 ng-pristine ng-untouched ng-valid ng-empty" name="4">
+								<label for="campo-radio2">Não está em uso</label>
+							</div>
+							<input required autocomplete="off" ng-model="getProdutoIdOrderByDataMovimento.observacao"
+								type="text"
+								class="col-12 ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required"
+								placeholder="Observação">
+
+							<div class="form-row col-md-12" style="place-content: center;">
+								<button class="btn col-md-4 btn-lg btn-primary btn-block" ng-click="validarCampos()"
+									type="button" style="place-self: flex-end;">Salvar</button>
+								<button class="btn col-md-4 btn-lg btn-primary btn-block" ng-click="limpar()"
+									type="button">Limpar Tudo</button>
+							</div>
+						</div>
+
+						<div col-md-6="">
+							<div ng-model="getProdutoIdOrderByDataMovimento.nomeProduto"
+								class="form-form col-md-12 ng-pristine ng-untouched ng-valid ng-empty"
+								style="text-align: -webkit-center;">
+								<table>
+									<thead>
+										<tr>
+
+											<th>Ultima Movimentacao</th>
+											<th>Responsável</th>
+											<th>emUso</th>
+											<th>Observacao</th>
+
+										</tr>
+									</thead>
+									<thead>
+										<tr ng-repeat="xxx in getProdutoIdOrderByDataMovimentos">
+											<th>{{xxx.dataMovimento}}</th>
+											<th>{{xxx.destino}}</th>
+											<th>{{xxx.emUso === 'true' || xxx.emUso === true ? 'Sim' : 'Não'}}</th>
+											<th>{{xxx.observacao}}</th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</div>
+
+					</div>
+					<div class=" form-form col-md-5" style="text-align: -webkit-center;">
+						<div class="col-md-12">
+
+							<input autocomplete="off" ng-model="elemento.nomeProduto" type="text"
+								class="col-12 ng-pristine ng-untouched ng-valid ng-empty" placeholder="nomeProduto">
+
+							<div class="col-12" style="display: inline-table;">
+								<input autocomplete="off" ng-model="elemento.registroTombamento" type="text"
+									class="col-6 ng-pristine ng-untouched ng-valid ng-empty" placeholder="Tombamento">
+								<input autocomplete="off" ng-model="elemento.lote" type="text"
+									class="col-6 ng-pristine ng-untouched ng-valid ng-empty" placeholder="Lote">
+							</div>
+						</div>
+						<div class="form-row col-md-12" style="place-content: center;">
+							<button class="btn col-md-4 btn-lg btn-primary btn-block"
+								ng-click="validarCamporAntesDeSalvarItem()" type="button"
+								style="place-self: flex-end;">Salvar</button>
+							<button class="btn col-md-4 btn-lg btn-primary btn-block" ng-click="validarPesquisa()"
+								type="button" style="place-self: flex-end;">Pesquisar</button>
+							<button class="btn col-md-4 btn-lg btn-primary btn-block" ng-click="limpar()"
+								type="button">Limpar</button>
+						</div>
+						<table style="" ng-init="getByOrderByDataTombamento()">
+							<thead>
+								<tr>
+									<th>Id</th>
+									<th>Item</th>
+									<th>Tombado Em</th>
+									<th>Lote</th>
+									<th>Tombamento</th>
+									<th>visualizar</th>
+								</tr>
+							</thead>
+							<thead>
+								<tr ng-repeat="date in getByOrderByDataTombamento">
+									<th>{{date.id}}</th>
+									<th>{{date.nomeProduto}}</th>
+									<th>{{date.dataTombamento}}</th>
+									<th>{{date.lote}}</th>
+									<th>{{date.registroTombamento}}</th>
+									<th><button ng-click="getProdutoIdOrderByDataMovimento()">visualizar</button></th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	</nav>
+	</nav>
+</body>
+
+</html>
